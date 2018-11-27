@@ -4,7 +4,8 @@ function Mower(coords,inputs){
   this.card=coords[2];
   this.inputs=inputs;
 
-  this.canMove = function(x,y,xLimit,yLimit,curCard,nextInput){
+  this.canMove = function(x,y,xLimit,yLimit,curCard,nextInput,mowers){
+    var self = this;
     // the input is L or R, there is no movement so you can always move,
     if(/L|R/.test(nextInput)){
       return true;
@@ -30,18 +31,23 @@ function Mower(coords,inputs){
         break;
 
       // every other display can move
-      default:
-      return true;
+      /*default:
+      return true;*/
     }
+
+    // we now need to check for collisions
+    return mowers.reduce(function(acc,currMower,index){
+      return acc && (!(currMower.x==(x+1)&&currMower.y==y&&curCard=="E")&&!(currMower.x==(x-1)&&currMower.y==y&&curCard=="W")&&!(currMower.y==(y+1)&&currMower.x==x&&curCard=="N")&&!(currMower.y==(y-1)&&currMower.y==y&&curCard=="S"));
+    },true)
   };
 
-  this.applyInputs = function(xLimit,yLimit){
+  this.applyInputs = function(xLimit,yLimit, mowers){
     // binding problems, so we can have acces to the object function in reduce context
     var self = this;
     const finalCoords = this.inputs.reduce(function(accumulator,nextInput,index){
 
       // maybe not optimal (for readability) written like this but do the job
-      return self.move(accumulator[0],accumulator[1],accumulator[2],nextInput,self.canMove(accumulator[0],accumulator[1],xLimit,yLimit,accumulator[2],nextInput));
+      return self.move(accumulator[0],accumulator[1],accumulator[2],nextInput,self.canMove(accumulator[0],accumulator[1],xLimit,yLimit,accumulator[2],nextInput,mowers));
 
     },[this.x,this.y,this.card]);
 

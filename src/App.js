@@ -23,8 +23,8 @@ this.main = function(param){
     this.validityCheckAndBuild(inputsArray);
 
     //we will apply the inputs of each mowers
-    lawn.mowers.map(function(mower){
-      console.log(mower.applyInputs(lawn.xLimit,lawn.yLimit));
+    lawn.mowers.map(function(mower,index){
+      console.log(mower.applyInputs(lawn.xLimit,lawn.yLimit,lawn.mowers));
     })
   }catch(e){
     throw new Error("Problème avec la lecture du fichier "+param+ "\n "+e);
