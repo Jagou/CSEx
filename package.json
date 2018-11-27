@@ -1,0 +1,14 @@
+{
+  "name": "lawnmower",
+  "version": "0.0.1",
+  "description": "this is an exercise with a lawn and mowers",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest spec.js"
+  },
+  "author": "Alexandre Hare",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^23.6.0"
+  }
+}
